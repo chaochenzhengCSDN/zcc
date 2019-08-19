@@ -1,10 +1,10 @@
 package com.example.git123.controller;
 
 import com.example.git123.entity.User;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zcc
@@ -13,15 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/web")
 public class MyController {
+
+    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    public String login(){
+        return "login";
+    }
     /**
      * get请求参数处理 2019/8/19
      * @param username
      * @param pwd
      * @return
      */
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
-    public String login(@RequestParam(value = "username",defaultValue = "zcc",required = false)String username,
-                        @RequestParam(value = "pwd",required = true)String pwd){
+    @PostMapping(value = "/loginIn")
+    public String loginIn(@RequestParam(value = "username",required = false)String username,
+                        @RequestParam(value = "pwd",required = true)String pwd,
+                        Model model){
         /**
          * @author zcc
          * 修改 加入判断登录条件
@@ -33,6 +39,28 @@ public class MyController {
         }else{
             msg="登录失败";
         }
-        return msg;
+        model.addAttribute("username",username);
+        model.addAttribute("pwd",pwd);
+        model.addAttribute("msg",msg);
+        return "model";
+    }
+    /**
+     * 注册操作
+     *
+     */
+    @PostMapping("/register")
+    private String register(@RequestParam(value = "username",required = false)String username,
+                            @RequestParam(value = "pwd",required = true)String pwd,
+                            @RequestParam(value = "nickname",required = true)String nickname,
+                            Model model){
+        String registerMsg=null;
+        if(username.length()>6|| !StringUtils.isEmpty(username)){
+            registerMsg="名字长度过长，请小于6个字符，也不能为空";
+        }else if(pwd.length()==4|| !StringUtils.isEmpty(pwd)){
+            registerMsg="密码长度限制，填写4个字符，也不能为空";
+        }else{
+            registerMsg="注册成功";
+        }
+        return registerMsg;
     }
 }

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><br/>
+    <title>登录</title>
+</head>
+<body>
+    用户名:<input type="text" th:value="${username}" name="username" id="username"/><br/>
+    密码:<input type="password" th:value="${pwd}"/><br/>
+    <span th:value="${msg}"></span>
+    <input  type="button" th:value="登录" onclick="loginIn"/><br/>
+    <input  type="button" th:value="注册"/><br/>
+</body>
+</html>
