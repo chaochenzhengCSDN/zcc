@@ -1,0 +1,10 @@
+com\example\demo6574564\Demo6574564Application.class
+com\example\demo6574564\service\IMailService.class
+com\example\demo6574564\config\Swagger2.class
+com\example\demo6574564\controller\MyController.class
+com\example\demo6574564\controller\MailController.class
+com\example\demo6574564\entity\User.class
+com\example\demo6574564\service\UserService.class
+com\example\demo6574564\service\impl\IMailServiceImpl.class
+com\example\demo6574564\controller\FileUploadController.class
+com\example\demo6574564\config\RedisConfig.class
