@@ -1,14 +1,10 @@
 package com.example.demo6574564.controller;
 
-import com.example.demo6574564.Demo6574564Application;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -23,6 +19,7 @@ import java.util.List;
  */
 @Slf4j
 @Controller
+@Api(tags="0.1",description = "文件上传",value = "文件上传")
 public class FileUploadController {
 //    private static final Logger logger = LoggerFactory.getLogger(Demo6574564Application.class);
     /**
@@ -36,7 +33,8 @@ public class FileUploadController {
     /**
      * 实现文件上传
      * */
-    @RequestMapping("fileUpload")
+    @GetMapping("file")
+    @ApiOperation(value = "单文件上传")
     @ResponseBody
     public String fileUpload(@RequestParam("fileName") MultipartFile file){
         if(file.isEmpty()){
@@ -79,7 +77,9 @@ public class FileUploadController {
     /**
      * 实现多文件上传
      * */
-    @RequestMapping(value="multifileUpload",method= RequestMethod.POST)
+
+    @PostMapping("multifileUpload")
+    @ApiOperation(value = "多文件上传")
     public @ResponseBody String multifileUpload(HttpServletRequest request){
 
         List<MultipartFile> files = ((MultipartHttpServletRequest)request).getFiles("fileName");

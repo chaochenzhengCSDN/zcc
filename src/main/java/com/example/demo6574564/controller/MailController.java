@@ -1,8 +1,10 @@
 package com.example.demo6574564.controller;
 
 import com.example.demo6574564.service.IMailService;
-import com.example.demo6574564.service.impl.IMailServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.TemplateEngine;
@@ -14,6 +16,7 @@ import org.thymeleaf.context.Context;
  */
 @RestController
 @RequestMapping("/Mail")
+@Api(tags = "1.0", description = "邮件发送", value = "邮件发送")
 public class MailController {
 
     private static final String SUCC_MAIL = "邮件发送成功！";
@@ -29,7 +32,22 @@ public class MailController {
     @Autowired
     private TemplateEngine templateEngine;
 
-    @RequestMapping("/Email")
+    /**
+     * @Api：描述Controller
+     * @ApiIgnore：忽略该Controller，指不对当前类做扫描
+     * @ApiOperation：描述Controller类中的method接口
+     * @ApiParam：单个参数描述，与@ApiImplicitParam不同的是，他是写在参数左侧的。如（@ApiParam(name = "username",value = "用户名") String username）
+     * @ApiModel：描述POJO对象
+     * @ApiProperty：描述POJO对象中的属性值
+     * @ApiImplicitParam：描述单个入参信息
+     * @ApiImplicitParams：描述多个入参信息
+     * @ApiResponse：描述单个出参信息
+     * @ApiResponses：描述多个出参信息
+     * @ApiError：接口错误所返回的信息
+     * @return
+     */
+    @PostMapping("/Email")
+    @ApiOperation(value = "普通邮件发送")
     public String index(){
         try {
             mailService.sendSimpleMail(MAIL_TO,"这是一封普通的邮件","这是一封普通的SpringBoot测试邮件");
@@ -40,7 +58,8 @@ public class MailController {
         return SUCC_MAIL;
     }
 
-    @RequestMapping("/htmlEmail")
+    @PostMapping("/htmlEmail")
+    @ApiOperation(value = "HTML邮件发送")
     public String htmlEmail(){
         try {
             mailService.sendHtmlMail(MAIL_TO,"这是一HTML的邮件","<body>\n" +
@@ -71,7 +90,8 @@ public class MailController {
         return SUCC_MAIL;
     }
 
-    @RequestMapping("/attachmentsMail")
+    @PostMapping("/attachmentsMail")
+    @ApiOperation(value = "带附件的邮件发送")
     public String attachmentsMail(){
         try {
             mailService.sendAttachmentsMail(MAIL_TO, "这是一封带附件的邮件", "邮件中有附件，请注意查收！", IMG_PATH);
@@ -82,7 +102,8 @@ public class MailController {
         return SUCC_MAIL;
     }
 
-    @RequestMapping("/resourceMail")
+    @PostMapping("/resourceMail")
+    @ApiOperation(value = "带图片的邮件发送")
     public String resourceMail(){
         try {
             String rscId = "DoubleFJ";
@@ -96,7 +117,8 @@ public class MailController {
         return SUCC_MAIL;
     }
 
-    @RequestMapping("/templateMail")
+    @PostMapping("/templateMail")
+    @ApiOperation(value = "模板的邮件发送")
     public String templateMail(){
         try {
             Context context = new Context();
